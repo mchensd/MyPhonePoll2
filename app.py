@@ -37,9 +37,17 @@ def make_shell_context():
     return dict(app=app, db=db, User=User, Number=PhoneNumber)
 
 
+def create_db():
+    db.create_all()
+
+    u = User(first_name='Michael', last_name='Chen', email='michaelchensd@gmail.com', password='ch0c0l0te')
+    ph = PhoneNumber(number='6194933738', user=u, choices='{}', in_use=False)
+    db.session.add_all([u, ph])
+
+    db.session.commit()
 manager.add_command('db', MigrateCommand)
 manager.add_command("shell", Shell(make_context=make_shell_context))
-
+manager.add_command("create_db", create_db)
 app.config['SID'] = os.environ.get('SID')
 app.config['TOK'] = os.environ.get("TOK")
 
@@ -137,14 +145,7 @@ def phone_view(id):
 
         return render_template("new_poll.html", form=form)
 
-def create_db():
-    db.create_all()
 
-    u = User(first_name='Michael', last_name='Chen', email='michaelchensd@gmail.com', password='ch0c0l0te')
-    ph = PhoneNumber(number='6194933738', user=u, choices='{}', in_use=False)
-    db.session.add_all([u, ph])
-
-    db.session.commit()
 
 if __name__ == '__main__':
     manager.run()
