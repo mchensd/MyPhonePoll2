@@ -39,8 +39,8 @@ def make_shell_context():
 manager.add_command('db', MigrateCommand)
 manager.add_command("shell", Shell(make_context=make_shell_context))
 
-app.config['SID'] = os.environ.get('account_sid')
-app.config['TOK'] = os.environ.get("auth_token")
+app.config['SID'] = os.environ.get('SID')
+app.config['TOK'] = os.environ.get("TOK")
 
 
 
