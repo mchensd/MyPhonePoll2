@@ -16,7 +16,8 @@ app = Flask(__name__)
 
 
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABSE_URL') or \
+print(app.config['SECRET_KEY'])
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or \
                                         'sqlite:///' + os.path.join(basedir, 'data.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -135,6 +136,15 @@ def phone_view(id):
 
 
         return render_template("new_poll.html", form=form)
+
+def create_db():
+    db.create_all()
+
+    u = User(first_name='Michael', last_name='Chen', email='michaelchensd@gmail.com', password='ch0c0l0te')
+    ph = PhoneNumber(number='6194933738', user=u, choices='{}', in_use=False)
+    db.session.add_all([u, ph])
+
+    db.session.commit()
 
 if __name__ == '__main__':
     manager.run()
