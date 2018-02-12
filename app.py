@@ -90,8 +90,10 @@ def receiver(id):
 
 
         resp.message("That option is not a choice on the survey")
-        if in_msg.body.lower() in choices:
-            choices[in_msg.body.lower()] += 1
+        if in_msg.body.lower().strip() in choices:
+            choices[in_msg.body.lower().strip()] += 1
+            ph.choices = repr(choices)
+            db.session.commit()
             resp.message("Your vote has been counted!")
 
     return str(resp)
@@ -121,6 +123,7 @@ def phone_view(id):
             count = {}
             for choice in choices:
                 choice = choice.lower()
+                choice = choice.strip()
                 count[choice]=0
                 print(count)
             ph.make_survey(count)
