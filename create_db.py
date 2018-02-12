@@ -1,6 +1,5 @@
 
-from models import User, PhoneNumber
-from app import db
+from app import db, User, PhoneNumber
 from flask_migrate import upgrade
 
 upgrade()
