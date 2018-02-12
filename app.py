@@ -7,7 +7,7 @@ import os
 from flask import Flask, render_template, redirect, url_for
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate, MigrateCommand
+from flask_migrate import Migrate, MigrateCommand, upgrade
 from flask_script import Shell, Manager
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -17,7 +17,7 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 print(app.config['SECRET_KEY'])
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABSE_URL') or \
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or \
                                         'sqlite:///' + os.path.join(basedir, 'data.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -36,9 +36,11 @@ migrate = Migrate(app, db)
 def make_shell_context():
     return dict(app=app, db=db, User=User, Number=PhoneNumber)
 
-
+@manager.command
 def create_db():
-    db.create_all()
+    from models import User, PhoneNumber
+
+    upgrade()
 
     u = User(first_name='Michael', last_name='Chen', email='michaelchensd@gmail.com', password='ch0c0l0te')
     ph = PhoneNumber(number='6194933738', user=u, choices='{}', in_use=False)
@@ -47,7 +49,6 @@ def create_db():
     db.session.commit()
 manager.add_command('db', MigrateCommand)
 manager.add_command("shell", Shell(make_context=make_shell_context))
-manager.add_command("create_db", create_db)
 app.config['SID'] = os.environ.get('SID')
 app.config['TOK'] = os.environ.get("TOK")
 
