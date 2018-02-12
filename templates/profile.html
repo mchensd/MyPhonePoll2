@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ user.first_name }} {{ user.last_name }}'s Profile</h2>
+
+{% if current_user.id == user.id %}
+    <h2>Your Polls (private)</h2>
+    <h3>Ongoing Polls</h3>
+    <ul>
+    {% for ph in user.phone_numbers.filter_by(in_use=True) %}
+        <li><a href="{{ url_for('phone_view', id=ph.id) }}">{{ ph.number }}</a></li>
+    {% endfor %}
+    </ul>
+
+    <h3 style="margin-bottom:3px;">Available Phone Numbers</h3>
+    <small>Phone Numbers that can be used for a new poll</small>
+    <div style="margin-bottom:15px"></div>
+    <ul>
+    {% for ph in user.phone_numbers.filter_by(in_use=False) %}
+        <li><a href="{{ url_for('phone_view', id=ph.id) }}">{{ ph.number }}</a></li>
+    {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

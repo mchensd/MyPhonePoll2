@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block content %}
+    <h1>{{ title }}</h1>
+    <table>
+        <tr>
+            <th>Choice</th>
+            <th>Count</th>
+        </tr>
+        {% for key in poll %}
+        <tr>
+            <th>{{ key }}</th>
+            <th>{{ poll[key] }}</th>
+        </tr>
+        {% endfor %}
+    </table>
+    {{ wtf.quick_form(form) }}
+
+{% endblock %}

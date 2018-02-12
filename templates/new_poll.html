@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% from '_formhelper.html' import render_field %}
+
+{% block content %}
+    {#{{ wtf.quick_form(form) }}#}
+
+    <form method="POST">
+    {{ form.hidden_tag() }}
+    {{ render_field(form.title) }}
+    {{ render_field(form.choices) }}
+    {{ form.submit() }}
+
+    </form>
+
+{% endblock %}

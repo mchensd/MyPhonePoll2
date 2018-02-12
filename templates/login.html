@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block content %}
+
+{{ wtf.quick_form(form) }}
+<p>Unfortunately, no new accounts can be registered at this time.</p>
+{% endblock %}
+
