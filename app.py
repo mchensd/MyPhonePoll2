@@ -47,6 +47,7 @@ def create_db():
     db.session.add_all([u, ph])
 
     db.session.commit()
+    
 manager.add_command('db', MigrateCommand)
 manager.add_command("shell", Shell(make_context=make_shell_context))
 app.config['SID'] = os.environ.get('SID')

@@ -4,7 +4,7 @@
 
 {% block content %}
     {#{{ wtf.quick_form(form) }}#}
-
+    <h1>Create a poll</h1>
     <form method="POST">
     {{ form.hidden_tag() }}
     {{ render_field(form.title) }}

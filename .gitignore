@@ -6,3 +6,5 @@ blog
 coverage
 tag.py
 logs.txt
+__pycache__
+
