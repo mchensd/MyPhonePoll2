@@ -42,7 +42,7 @@ def create_db():
 
     upgrade()
 
-    u = User(first_name='Michael', last_name='Chen', email='michaelchensd@gmail.com', password='ch0c0l0te')
+    u = User(first_name='Michael', last_name='Chen', email='michaelchensd@gmail.com', password='asdf1234')
     ph = PhoneNumber(number='6194933738', user=u, choices='{}', in_use=False)
     db.session.add_all([u, ph])
 
